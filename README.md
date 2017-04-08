@@ -2,15 +2,17 @@
 This repository is the final project of PLP class from <b>CIn - UFPE</b>
 
 ## Theme
-Functions with parallel execution + Extension with communication channel between threads
+Functions with parallel execution and communication channel
 
 ## Team
 * [Alex Juvêncio Costa](https://github.com/AlexJCosta) - [ajc2@cin.ufpe.br](ajc2@cin.ufpe.br)
 * [Victor Laerte de Oliveira](https://github.com/victorlaerte) - [vlo2@cin.ufpe.br](vlo2@cin.ufpe.br)
 
 ## Proposal
-As a proposal for this project we will implement the functionality of declaration of functions with parallel execution. The evaluation process will be parallel through threads and the order of return will depend on the execution time of each function.
-In addition, we intend to implement in a modular and incremental way an extension of the functionality capable of making the functions communicate and wait for the result of others.
+As a proposal for this project we will implement the functionality to execute multiple functions in parallel.
+
+The evaluation process will be parallel through threads and the order of return will depend on the execution time and thread interdependencies.
+We intend to implement this in a modular and incremental way making it easy to understand and extend.
 
 ## Justification
 Parallel processing increases processing power by enabling active processors to work in parallel on the same problem in order to reduce the overall execution time, as well as to make better use of available resources by running a multi-process application, and also increase performance considerable. [1]
