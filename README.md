@@ -14,6 +14,12 @@ As a proposal for this project we will implement the functionality to execute mu
 The evaluation process will be parallel through threads and the order of return will depend on the execution time and thread interdependencies.
 We intend to implement this in a modular and incremental way making it easy to understand and extend.
 
+The syntax of the functionality [can be found here](/SINTAX.md)
+
+The BNF model [can be found here](/BNF.md)
+
+A sample code with concurrency and messaging that will guide real implementation [can be found here](https://github.com/victorlaerte/ichat-api)
+
 ## Justification
 Parallel processing increases processing power by enabling active processors to work in parallel on the same problem in order to reduce the overall execution time, as well as to make better use of available resources by running a multi-process application, and also increase performance considerable. [1]
 
