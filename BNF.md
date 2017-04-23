@@ -20,6 +20,9 @@ ValorFuncao ::= "fn" Id Id "." Expressao
 ExpUnaria ::= "-" Expressao | "not" Expressao | "length" Expressao 
                           | head(Expressao) | tail(Expressao) 
                           | ExpCompreensaoLista
+                          | wait(ValorInteiro)
+                          | receive(ValorString "," ValorInteiro)
+                          | send(ValorString "," ValorString)
 
 ExpCompreensaoLista ::= Expressao Gerador | Expressao Gerador Filtro
 
@@ -48,6 +51,8 @@ DeclaracaoFuncional ::= DecVariavel
  
 DecVariavel ::= "var" Id "=" Expressao
 DecFuncao ::= "fun" ListId "=" Expressao
+
+DecProcesso ::= "process" ExpDeclaracao "end"
 
 DecComposta ::= DeclaracaoFuncional "," DeclaracaoFuncional
 

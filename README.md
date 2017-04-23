@@ -2,7 +2,7 @@
 This repository is the final project of PLP class from <b>CIn - UFPE</b>
 
 ## Theme
-Functions with parallel execution and communication channel
+Functions with parallel execution with communication channel
 
 ## Team
 * [Alex Juvêncio Costa](https://github.com/AlexJCosta) - [ajc2@cin.ufpe.br](ajc2@cin.ufpe.br)
