@@ -14,6 +14,6 @@ end
 process idProcess2
 	let fun pong = wait(5) // This will lock the processe by 5 seconds 
                    send("main", " pong") // This will send message 'pong' to the mainProcess
-    in pong() 
+    	in pong() 
 end
 ```
