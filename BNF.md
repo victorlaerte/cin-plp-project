@@ -52,7 +52,7 @@ DeclaracaoFuncional ::= DecVariavel
 DecVariavel ::= "var" Id "=" Expressao
 DecFuncao ::= "fun" ListId "=" Expressao
 
-DecProcesso ::= "process" ExpDeclaracao "end"
+DecProcesso ::= "process" Id ExpDeclaracao "end"
 
 DecComposta ::= DeclaracaoFuncional "," DeclaracaoFuncional
 
