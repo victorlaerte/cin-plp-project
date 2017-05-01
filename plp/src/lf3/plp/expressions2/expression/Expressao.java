@@ -6,7 +6,7 @@ import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
 
-/** 
+/**
  * Uma expressao &eacute; a unidade basica na Linguagem de Expressoes.
  */
 public interface Expressao {
@@ -20,9 +20,9 @@ public interface Expressao {
 	 * Realiza a verificacao de tipos desta expressao.
 	 *
 	 * @param amb o ambiente que contem o mapeamento entre identificadores
-	 *          e tipos.
+	 *            e tipos.
 	 * @return <code>true</code> se os tipos da expressao sao validos;
-	 *          <code>false</code> caso contrario.
+	 *         <code>false</code> caso contrario.
 	 */
 	boolean checaTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException;
 
@@ -30,7 +30,7 @@ public interface Expressao {
 	 * Retorna os tipos possiveis desta expressao.
 	 *
 	 * @param amb o ambiente que contem o mapeamento entre identificadores
-	 *          e tipos.
+	 *            e tipos.
 	 * @return os tipos possiveis desta expressao.
 	 */
 	Tipo getTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException;

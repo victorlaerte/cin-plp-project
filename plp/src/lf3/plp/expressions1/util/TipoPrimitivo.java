@@ -9,9 +9,7 @@ package lf3.plp.expressions1.util;
  */
 public enum TipoPrimitivo implements Tipo {
 
-	INTEIRO("INTEIRO"),
-	BOOLEANO("BOOLEANO"),
-	STRING("STRING");
+	INTEIRO("INTEIRO"), BOOLEANO("BOOLEANO"), STRING("STRING");
 
 	protected String nome;
 
@@ -25,35 +23,45 @@ public enum TipoPrimitivo implements Tipo {
 	/* (non-Javadoc)
 	 * @see lf3.plp.expressions1.util.Tipo#getNome()
 	 */
+	@Override
 	public String getNome() {
+
 		return nome;
 	}
 
 	/* (non-Javadoc)
 	 * @see lf3.plp.expressions1.util.Tipo#eInteiro()
 	 */
+	@Override
 	public boolean eInteiro() {
+
 		return this.eIgual(INTEIRO);
 	}
 
 	/* (non-Javadoc)
 	 * @see lf3.plp.expressions1.util.Tipo#eBooleano()
 	 */
+	@Override
 	public boolean eBooleano() {
+
 		return this.eIgual(BOOLEANO);
 	}
 
 	/* (non-Javadoc)
 	 * @see lf3.plp.expressions1.util.Tipo#eString()
 	 */
+	@Override
 	public boolean eString() {
+
 		return this.eIgual(STRING);
 	}
 
 	/* (non-Javadoc)
 	 * @see lf3.plp.expressions1.util.Tipo#eIgual(lf3.plp.expressions1.util.Tipo)
 	 */
+	@Override
 	public boolean eIgual(Tipo tipo) {
+
 		boolean ret = false;
 		if (eValido()) {
 			if (tipo.eValido()) {
@@ -68,14 +76,18 @@ public enum TipoPrimitivo implements Tipo {
 	/* (non-Javadoc)
 	 * @see lf3.plp.expressions1.util.Tipo#eValido()
 	 */
+	@Override
 	public boolean eValido() {
+
 		return this.nome != null && nome.length() > 0;
 	}
 
 	/* (non-Javadoc)
 	 * @see lf3.plp.expressions1.util.Tipo#intersecao(lf3.plp.expressions1.util.Tipo)
 	 */
+	@Override
 	public TipoPrimitivo intersecao(Tipo outroTipo) {
+
 		if (outroTipo.eIgual(this)) {
 			return this;
 		} else {
@@ -85,6 +97,7 @@ public enum TipoPrimitivo implements Tipo {
 
 	@Override
 	public String toString() {
+
 		return this.nome;
 	}
 
