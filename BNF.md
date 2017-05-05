@@ -9,7 +9,7 @@ Expressao ::= Valor
 | Id
 | Aplicacao
 | IfThenElse
- 
+
 Valor ::= ValorConcreto | ValorAbstrato
 ValorAbstrato ::= ValorFuncao
 
@@ -23,9 +23,11 @@ ExpUnaria ::= "-" Expressao | "not" Expressao | "length" Expressao
 
 ExpCompreensaoLista ::= Expressao Gerador | Expressao Gerador Filtro
 
-ExpProcess ::=  | wait (ValorInteiro)
-                | receive (ValorString "," ValorInteiro)
-                | send (ValorString "," ValorString)
+ExpExecutor ::= wait(Expressao) | send(ValorString "," ValorString)
+
+ExpPromise ::= receive(ValorString "," ValorInteiro)
+
+ExpProcess ::= ExpExecutor | ExpPromise
 
 Gerador ::= “for” Id “in” Expressao
                 | “for” Id “in” Expressao [“,”] Gerador
