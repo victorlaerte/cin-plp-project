@@ -14,10 +14,12 @@ import lf3.plp.functional2.expression.ExpDeclaracao;
 import lf3.plp.functional2.expression.ValorFuncao;
 
 public class DecProcesso implements DeclaracaoFuncional {
+	private Id id;
 	private ExpDeclaracao expDeclaracao;
 	
 
-	public DecProcesso(ExpDeclaracao expDeclaracao) {
+	public DecProcesso(Id id, ExpDeclaracao expDeclaracao) {
+		this.id = id;
 		this.expDeclaracao = expDeclaracao;
 	}
 
