@@ -1,6 +1,5 @@
 package lf3.plp.functional3.declaration;
 
-import java.util.List;
 import java.util.Map;
 
 import lf3.plp.expressions1.util.Tipo;
@@ -16,12 +15,12 @@ import lf3.plp.functional2.expression.ValorFuncao;
 
 public class DecProcesso implements DeclaracaoFuncional {
 	private Id id;
-	private List<ExpDeclaracao> listExpDeclaracao;
+	private ExpDeclaracao expDeclaracao;
 	
 
-	public DecProcesso(Id id, List<ExpDeclaracao> listExpDeclaracao) {
+	public DecProcesso(Id id, ExpDeclaracao expDeclaracao) {
 		this.id = id;
-		this.listExpDeclaracao = listExpDeclaracao;
+		this.expDeclaracao = expDeclaracao;
 	}
 
 
