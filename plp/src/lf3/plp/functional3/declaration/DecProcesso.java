@@ -22,15 +22,38 @@ public class DecProcesso implements DeclaracaoFuncional {
 		this.id = id;
 		this.expDeclaracao = expDeclaracao;
 	}
+	
+
+	public Id getId() {
+		return id;
+	}
+
+
+	public void setId(Id id) {
+		this.id = id;
+	}
+
+
+	public ExpDeclaracao getExpDeclaracao() {
+		return expDeclaracao;
+	}
+
+
+	public void setExpDeclaracao(ExpDeclaracao expDeclaracao) {
+		this.expDeclaracao = expDeclaracao;
+	}
 
 
 	@Override
 	public boolean checaTipo(AmbienteCompilacao ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		return false;
+		return expDeclaracao.checaTipo(ambiente);
 	}
-
+	
+	public void avaliar(AmbienteExecucao ambiente) 
+		    throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException{
+			expDeclaracao.avaliar(ambiente);
+		}
 
 	@Override
 	public void elabora(AmbienteExecucao amb, Map<Id, Valor> declaracoes, Map<Id, ValorFuncao> declaracoesFuncoes)
