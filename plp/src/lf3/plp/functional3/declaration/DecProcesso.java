@@ -1,104 +1,65 @@
 package lf3.plp.functional3.declaration;
 
-import java.util.Map;
-
-import lf3.plp.expressions1.util.Tipo;
 import lf3.plp.expressions2.expression.Id;
-import lf3.plp.expressions2.expression.Valor;
-import lf3.plp.expressions2.memory.AmbienteCompilacao;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import lf3.plp.functional1.declaration.DeclaracaoFuncional;
 import lf3.plp.functional2.expression.ExpDeclaracao;
-import lf3.plp.functional2.expression.ValorFuncao;
 
-public class DecProcesso implements DeclaracaoFuncional {
+public class DecProcesso {
+
 	private Id id;
 	private ExpDeclaracao expDeclaracao;
-	
 
 	public DecProcesso(Id id, ExpDeclaracao expDeclaracao) {
 		this.id = id;
 		this.expDeclaracao = expDeclaracao;
 	}
-	
 
 	public Id getId() {
+
 		return id;
 	}
 
-
 	public void setId(Id id) {
+
 		this.id = id;
 	}
 
-
 	public ExpDeclaracao getExpDeclaracao() {
+
 		return expDeclaracao;
 	}
 
-
 	public void setExpDeclaracao(ExpDeclaracao expDeclaracao) {
+
 		this.expDeclaracao = expDeclaracao;
 	}
 
+	public void avaliar(AmbienteExecucao ambiente) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
-	@Override
-	public boolean checaTipo(AmbienteCompilacao ambiente)
-			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		return expDeclaracao.checaTipo(ambiente);
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				/*
+				 * TODO provavelmente teremos de adicionar o processo no ambiente de execucao 
+				 * ou algo do tipo para recuperar depois
+				 */
+
+				expDeclaracao.avaliar(ambiente);
+			}
+		}).start();
+
 	}
-	
-	public void avaliar(AmbienteExecucao ambiente) 
-		    throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException{
-			expDeclaracao.avaliar(ambiente);
-		}
-
-	@Override
-	public void elabora(AmbienteExecucao amb, Map<Id, Valor> declaracoes, Map<Id, ValorFuncao> declaracoesFuncoes)
-			throws VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void elabora(AmbienteCompilacao amb, Map<Id, Tipo> tipos) throws VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void incluir(AmbienteExecucao amb, Map<Id, Valor> declaracoes, Map<Id, ValorFuncao> declaracoesFuncoes)
-			throws VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void incluir(AmbienteCompilacao amb, Map<Id, Tipo> tipos, boolean incluirCuringa)
-			throws VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void reduzir(AmbienteExecucao amb) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public DeclaracaoFuncional clone() {
+
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }
