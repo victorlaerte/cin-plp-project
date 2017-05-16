@@ -43,7 +43,7 @@ public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecuca
 
 		if (map.containsKey(processId)) {
 			BlockingQueue<String> blockingQueue = map.get(processId);
-			blockingQueue.put(processId);
+			blockingQueue.put(message);
 
 		} else {
 			BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(DEFAULT_QUEUE_SIZE);
