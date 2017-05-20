@@ -1,18 +1,67 @@
 package lf3.plp.functional3.expression;
 
-import lf3.plp.expressions1.util.Tipo;
+import lf3.plp.expressions2.expression.Expressao;
 import lf3.plp.expressions2.expression.Valor;
 import lf3.plp.expressions2.memory.AmbienteCompilacao;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import lf3.plp.functional3.exception.TipoParametrosException;
 
-public interface ExpPromise {
+public abstract class ExpPromise {
 
 	/**
-	 * Avalia a expressao retornando seu Valor.
+	 * Expressao contida pela expressao unaria
 	 */
-	Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException;
+	protected Expressao[] exp;
+
+	/**
+	 * Representacao do operador desta expressao unaria.
+	 */
+	private String operador;
+
+	/**
+	 * Construtor da classe.
+	 * 
+	 * @param exp
+	 *            expressao contida pela expressao unaria.
+	 */
+	public ExpPromise(String operador, Expressao... exp) {
+		this.exp = exp;
+		this.operador = operador;
+	}
+
+	/**
+	 * Retorna a expressao contida pela expressao unaria
+	 * 
+	 * @return a expressao contida pela expressao unaria
+	 */
+	public Expressao[] getExp() {
+
+		return exp;
+	}
+
+	@Override
+	public String toString() {
+
+		return String.format("%s %s", operador, exp);
+	}
+
+	/**
+	 * Retorna a representacao do operador desta expressao unaria.
+	 * 
+	 * @return a representacao do operador desta expressao unaria.
+	 */
+	public String getOperador() {
+
+		return operador;
+	}
+
+	/**
+	 * Executa a expressao sem retornar nada.
+	 */
+	abstract Valor avalia(AmbienteExecucao amb)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException, TipoParametrosException;
 
 	/**
 	 * Realiza a verificacao de tipos desta expressao.
@@ -22,15 +71,6 @@ public interface ExpPromise {
 	 * @return <code>true</code> se os tipos da expressao sao validos;
 	 *         <code>false</code> caso contrario.
 	 */
-	boolean checaTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException;
-
-	/**
-	 * Retorna os tipos possiveis desta expressao.
-	 *
-	 * @param amb o ambiente que contem o mapeamento entre identificadores
-	 *            e tipos.
-	 * @return os tipos possiveis desta expressao.
-	 */
-	Tipo getTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException;
-
+	abstract boolean checaTipo(AmbienteCompilacao amb)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException;
 }
