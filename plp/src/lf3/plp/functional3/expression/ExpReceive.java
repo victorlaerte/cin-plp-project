@@ -1,5 +1,7 @@
 package lf3.plp.functional3.expression;
 
+import lf3.plp.expressions1.util.Tipo;
+import lf3.plp.expressions1.util.TipoPrimitivo;
 import lf3.plp.expressions2.expression.Expressao;
 import lf3.plp.expressions2.expression.Valor;
 import lf3.plp.expressions2.expression.ValorInteiro;
@@ -8,7 +10,6 @@ import lf3.plp.expressions2.memory.AmbienteCompilacao;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import lf3.plp.functional3.exception.TipoParametrosException;
 
 public class ExpReceive extends ExpPromise {
 
@@ -17,7 +18,8 @@ public class ExpReceive extends ExpPromise {
 	}
 
 	@Override
-	boolean checaTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
+	public boolean checaTipo(AmbienteCompilacao amb)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
 		Expressao[] expressions = getExp();
 
@@ -33,8 +35,7 @@ public class ExpReceive extends ExpPromise {
 	}
 
 	@Override
-	public Valor avalia(AmbienteExecucao amb)
-			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException, TipoParametrosException {
+	public Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
 		Expressao[] expressions = getExp();
 
@@ -50,6 +51,24 @@ public class ExpReceive extends ExpPromise {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			//TODO: decidir o comportamento
 		}
+
+		return null;
+	}
+
+	@Override
+	public Tipo getTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
+
+		return TipoPrimitivo.STRING;
+	}
+
+	@Override
+	public Expressao reduzir(AmbienteExecucao ambiente) {
+
+		return null;
+	}
+
+	@Override
+	public Expressao clone() {
 
 		return null;
 	}

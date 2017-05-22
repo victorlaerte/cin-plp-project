@@ -1,14 +1,11 @@
 package lf3.plp.functional3.expression;
 
 import lf3.plp.expressions2.expression.Expressao;
-import lf3.plp.expressions2.expression.Valor;
 import lf3.plp.expressions2.memory.AmbienteCompilacao;
-import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import lf3.plp.functional3.exception.TipoParametrosException;
 
-public abstract class ExpPromise {
+public abstract class ExpPromise implements Expressao {
 
 	/**
 	 * Expressao contida pela expressao unaria
@@ -58,12 +55,6 @@ public abstract class ExpPromise {
 	}
 
 	/**
-	 * Executa a expressao sem retornar nada.
-	 */
-	abstract Valor avalia(AmbienteExecucao amb)
-			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException, TipoParametrosException;
-
-	/**
 	 * Realiza a verificacao de tipos desta expressao.
 	 *
 	 * @param amb o ambiente que contem o mapeamento entre identificadores
@@ -71,6 +62,13 @@ public abstract class ExpPromise {
 	 * @return <code>true</code> se os tipos da expressao sao validos;
 	 *         <code>false</code> caso contrario.
 	 */
-	abstract boolean checaTipo(AmbienteCompilacao amb)
+	@Override
+	public abstract boolean checaTipo(AmbienteCompilacao amb)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException;
+
+	@Override
+	public Expressao clone() {
+
+		return null;
+	}
 }
