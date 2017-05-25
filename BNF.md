@@ -9,6 +9,7 @@ Expressao ::= Valor
 | Id
 | Aplicacao
 | IfThenElse
+| ExpProcessoDeclaracao
 
 Valor ::= ValorConcreto | ValorAbstrato
 ValorAbstrato ::= ValorFuncao
@@ -55,7 +56,8 @@ DeclaracaoFuncional ::= DecVariavel
 DecVariavel ::= "var" Id "=" Expressao
 DecFuncao ::= "fun" ListId "=" Expressao
 
-DecProcesso ::= "process" Id ExpDeclaracao "end"
+ExpProcessoDeclaracao ::= "let" DecProcess in Expressao
+DecProcesso ::= "process" ExpDeclaracao "end"
 
 DecComposta ::= DeclaracaoFuncional "," DeclaracaoFuncional
 
