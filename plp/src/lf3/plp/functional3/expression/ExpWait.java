@@ -94,6 +94,6 @@ public class ExpWait extends ExpUnaria {
 	@Override
 	public ExpUnaria clone() {
 
-		return null;
+		return new ExpWait(exp.clone());
 	}
 }
