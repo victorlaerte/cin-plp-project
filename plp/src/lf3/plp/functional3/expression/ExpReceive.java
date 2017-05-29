@@ -69,8 +69,7 @@ public class ExpReceive extends ExpPromise {
 
 	@Override
 	public Expressao clone() {
-
-		return null;
+		return new ExpReceive(exp.clone());
 	}
 
 }
