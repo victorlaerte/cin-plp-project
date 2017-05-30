@@ -12,6 +12,7 @@ import lf3.plp.expressions2.expression.Id;
  * 
  */
 public class Contexto<T> {
+
 	/**
 	 * A pilhaValor de blocos de contexto.
 	 */
@@ -24,11 +25,13 @@ public class Contexto<T> {
 		pilha = new Stack<HashMap<Id, T>>();
 	}
 
-	public void incrementa() {
+	public synchronized void incrementa() {
+
 		pilha.push(new HashMap<Id, T>());
 	}
 
-	public void restaura() {
+	public synchronized void restaura() {
+
 		pilha.pop();
 	}
 
@@ -38,7 +41,8 @@ public class Contexto<T> {
 	 * @exception VariavelJaDeclaradaException
 	 *                se j� existir um mapeamento do identificador nesta tabela.
 	 */
-	public void map(Id idArg, T valorId) throws VariavelJaDeclaradaException {
+	public synchronized void map(Id idArg, T valorId) throws VariavelJaDeclaradaException {
+
 		try {
 			HashMap<Id, T> aux = pilha.peek();
 			if (aux.put(idArg, valorId) != null)
@@ -55,7 +59,8 @@ public class Contexto<T> {
 	 *                se n�o existir nenhum valor mapeado ao id dado nesta
 	 *                tabela.
 	 */
-	public T get(Id idArg) throws VariavelNaoDeclaradaException {
+	public synchronized T get(Id idArg) throws VariavelNaoDeclaradaException {
+
 		try {
 			T result = null;
 			Stack<HashMap<Id, T>> auxStack = new Stack<HashMap<Id, T>>();
@@ -81,7 +86,8 @@ public class Contexto<T> {
 	 * 
 	 * @return Stack
 	 */
-	protected Stack<HashMap<Id, T>> getPilha() {
+	protected synchronized Stack<HashMap<Id, T>> getPilha() {
+
 		return pilha;
 	}
 
@@ -91,7 +97,8 @@ public class Contexto<T> {
 	 * @param pilha
 	 *            The pilhaValor to set
 	 */
-	protected void setPilha(Stack<HashMap<Id, T>> pilha) {
+	protected synchronized void setPilha(Stack<HashMap<Id, T>> pilha) {
+
 		this.pilha = pilha;
 	}
 

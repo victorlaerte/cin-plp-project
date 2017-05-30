@@ -1,6 +1,7 @@
 package lf3.plp.expressions2.expression;
 
 import lf3.plp.expressions1.util.Tipo;
+import lf3.plp.expressions1.util.TipoPrimitivo;
 import lf3.plp.expressions2.memory.AmbienteCompilacao;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
@@ -9,17 +10,19 @@ import lf3.plp.functional3.declaration.DecProcesso;
 
 public class ExpProcessoDeclaracao implements Expressao {
 
-	private DecProcesso decProcesso;
+	private DecProcesso[] decProcessoArray;
 
-	public ExpProcessoDeclaracao(DecProcesso decProcesso) {
-		this.decProcesso = decProcesso;
+	public ExpProcessoDeclaracao(DecProcesso... decProcesso) {
+		this.decProcessoArray = decProcesso;
 	}
 
 	@Override
 	public Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
 		amb.incrementa();
-		decProcesso.avaliar(amb);
+		for (DecProcesso decProcesso : decProcessoArray) {
+			decProcesso.avaliar(amb);
+		}
 		return null;
 	}
 
@@ -28,31 +31,28 @@ public class ExpProcessoDeclaracao implements Expressao {
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
 		amb.incrementa();
-		boolean result = decProcesso.getExpDeclaracao().checaTipo(amb);
 		amb.restaura();
-		return result;
+		return true;
 	}
 
 	@Override
 	public Tipo getTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
 		amb.incrementa();
-		Tipo result = decProcesso.getExpDeclaracao().getTipo(amb);
 		amb.restaura();
-		return result;
+		return TipoPrimitivo.STRING;
 	}
 
 	@Override
 	public Expressao reduzir(AmbienteExecucao ambiente) {
 
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Expressao clone() {
 
-		return new ExpProcessoDeclaracao((DecProcesso) decProcesso.clone());
+		return null;
 	}
 
 }

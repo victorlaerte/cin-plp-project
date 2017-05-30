@@ -5,7 +5,6 @@ import lf3.plp.expressions2.expression.Valor;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import lf3.plp.functional1.declaration.DeclaracaoFuncional;
 import lf3.plp.functional2.expression.ExpDeclaracao;
 
 public class DecProcesso {
@@ -59,12 +58,4 @@ public class DecProcesso {
 		}).start();
 
 	}
-
-	@Override
-	public DeclaracaoFuncional clone() {
-
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
