@@ -1,6 +1,7 @@
 package lf3.plp.functional3.declaration;
 
 import lf3.plp.expressions2.expression.Id;
+import lf3.plp.expressions2.expression.Valor;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
@@ -49,7 +50,11 @@ public class DecProcesso {
 				 * ou algo do tipo para recuperar depois
 				 */
 
-				expDeclaracao.avaliar(ambiente);
+				Valor result = expDeclaracao.avaliar(ambiente);
+
+				System.out.println(result.toString());
+
+				ambiente.restaura();
 			}
 		}).start();
 
