@@ -1,5 +1,7 @@
 package lf3.plp.expressions2.expression;
 
+import java.util.Map;
+
 import lf3.plp.expressions1.util.Tipo;
 import lf3.plp.expressions2.memory.AmbienteCompilacao;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
@@ -16,21 +18,27 @@ public class ExpProcessoDeclaracao implements Expressao {
 
 	@Override
 	public Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		return null;
+		amb.incrementa();
+		Valor result = decProcesso.getExpDeclaracao().avaliar(amb);
+		amb.restaura();
+		return result;
 	}
 
 	@Override
 	public boolean checaTipo(AmbienteCompilacao amb)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		return false;
+		amb.incrementa();
+		boolean result = decProcesso.getExpDeclaracao().checaTipo(amb);
+		amb.restaura();
+		return result;
 	}
 
 	@Override
 	public Tipo getTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		return null;
+		amb.incrementa();
+		Tipo result = decProcesso.getExpDeclaracao().getTipo(amb);
+		amb.restaura();
+		return result;
 	}
 
 	@Override
@@ -41,8 +49,7 @@ public class ExpProcessoDeclaracao implements Expressao {
 
 	@Override
 	public Expressao clone() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ExpProcessoDeclaracao((DecProcesso) decProcesso.clone());
 	}
 
 }
