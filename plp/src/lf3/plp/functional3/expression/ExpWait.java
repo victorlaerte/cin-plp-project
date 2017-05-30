@@ -1,5 +1,8 @@
 package lf3.plp.functional3.expression;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lf3.plp.expressions1.util.Tipo;
 import lf3.plp.expressions1.util.TipoPrimitivo;
 import lf3.plp.expressions2.expression.ExpUnaria;
@@ -14,49 +17,17 @@ import lf3.plp.functional3.exception.TipoParametrosException;
 
 public class ExpWait extends ExpUnaria {
 
-	//	public class ExpWait extends ExpExcutor {
-	//  }
-	//	public ExpWait(Expressao... exp) {
-	//		super("wait", exp);
-	//	}
-	public ExpWait(Expressao exp) {
-		super(exp, "wait");
+	private List<Expressao> callbacks = new ArrayList<Expressao>();
+
+	public ExpWait(Expressao... exp) {
+		super(exp[0], "wait");
+
+		if (exp.length > 1) {
+			for (Expressao expressao : exp) {
+				callbacks.add(expressao);
+			}
+		}
 	}
-
-	//	@Override
-	//	void executa(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-	//
-	//		Expressao[] expressions = getExp();
-	//
-	//		try {
-	//			Expressao expressao = expressions[0];
-	//
-	//			Integer valor = ((ValorInteiro) expressao.avaliar(amb)).valor();
-	//
-	//			Thread.sleep(valor * 1000);
-	//
-	//		} catch (ArrayIndexOutOfBoundsException e) {
-	//			throw new TipoParametrosException(TipoPrimitivo.INTEIRO);
-	//		} catch (InterruptedException e) {
-	//			e.printStackTrace();
-	//		}
-	//	}
-
-	//	@Override
-	//	boolean checaTipo(AmbienteCompilacao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-	//
-	//		Expressao[] expressions = getExp();
-	//
-	//		try {
-	//
-	//			Expressao expressao = expressions[0];
-	//
-	//			return expressao.getTipo(amb).eInteiro();
-	//
-	//		} catch (ArrayIndexOutOfBoundsException e) {
-	//			throw new TipoParametrosException(TipoPrimitivo.INTEIRO);
-	//		}
-	//	}
 
 	@Override
 	public Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
@@ -67,6 +38,10 @@ public class ExpWait extends ExpUnaria {
 			Integer valor = ((ValorInteiro) expressao.avaliar(amb)).valor();
 
 			Thread.sleep(valor * 1000);
+
+			for (Expressao callback : callbacks) {
+				callback.avaliar(amb);
+			}
 
 			return new ValorInteiro(valor);
 		} catch (ArrayIndexOutOfBoundsException e) {
