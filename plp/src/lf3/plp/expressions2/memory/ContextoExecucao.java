@@ -15,7 +15,14 @@ import lf3.plp.functional1.memory.ContextoExecucaoFuncional;
 public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecucao {
 
 	public static final int DEFAULT_QUEUE_SIZE = 1000;
-	public Map<String, BlockingQueue<String>> map = new HashMap<>();
+	private Map<String, BlockingQueue<String>> map = new HashMap<>();
+	private AmbienteExecucao parent;
+
+	public ContextoExecucao() {}
+
+	public ContextoExecucao(AmbienteExecucao parent) {
+		this.parent = parent;
+	}
 
 	@Override
 	public ContextoExecucao clone() {
@@ -47,6 +54,7 @@ public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecuca
 
 		} else {
 			BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(DEFAULT_QUEUE_SIZE);
+			blockingQueue.put(message);
 			map.put(processId, blockingQueue);
 		}
 	}
@@ -69,5 +77,11 @@ public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecuca
 		}
 
 		return message;
+	}
+
+	@Override
+	public AmbienteExecucao getParent() {
+
+		return parent;
 	}
 }

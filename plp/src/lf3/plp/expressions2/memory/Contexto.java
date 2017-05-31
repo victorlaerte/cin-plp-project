@@ -99,8 +99,6 @@ public class Contexto<T> {
 	 */
 	protected Stack<HashMap<Id, T>> getPilha() {
 
-		System.out.println("GET PILHA");
-		System.out.println(pilha.toString());
 		return pilha;
 	}
 

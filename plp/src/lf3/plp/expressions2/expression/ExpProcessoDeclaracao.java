@@ -30,10 +30,9 @@ public class ExpProcessoDeclaracao implements Expressao {
 		CompletionService<Valor> completionService = new ExecutorCompletionService<Valor>(executor);
 
 		for (DecProcesso decProcesso : decProcessoArray) {
-			AmbienteExecucao ambExec = new ContextoExecucao();
+			AmbienteExecucao ambExec = new ContextoExecucao(amb);
 			completionService.submit(decProcesso.avaliar(ambExec));
 		}
-
 		int received = 0;
 		boolean errors = false;
 
