@@ -1,5 +1,7 @@
 package lf3.plp.functional3.declaration;
 
+import java.util.concurrent.Callable;
+
 import lf3.plp.expressions2.expression.Id;
 import lf3.plp.expressions2.expression.Valor;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
@@ -37,25 +39,18 @@ public class DecProcesso {
 		this.expDeclaracao = expDeclaracao;
 	}
 
-	public void avaliar(AmbienteExecucao ambiente) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
+	public Callable<Valor> avaliar(AmbienteExecucao ambiente)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
-		new Thread(new Runnable() {
+		Callable<Valor> callable = new Callable<Valor>() {
 
 			@Override
-			public void run() {
+			public Valor call() throws Exception {
 
-				/*
-				 * TODO provavelmente teremos de adicionar o processo no ambiente de execucao 
-				 * ou algo do tipo para recuperar depois
-				 */
-
-				Valor result = expDeclaracao.avaliar(ambiente);
-
-				System.out.println(result.toString());
-
-				ambiente.restaura();
+				return expDeclaracao.avaliar(ambiente);
 			}
-		}).start();
+		};
 
+		return callable;
 	}
 }

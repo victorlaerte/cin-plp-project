@@ -25,7 +25,7 @@ public class Contexto<T> {
 		pilha = new Stack<HashMap<Id, T>>();
 	}
 
-	public synchronized void incrementa() {
+	public void incrementa() {
 
 		pilha.push(new HashMap<Id, T>());
 	}
@@ -41,7 +41,7 @@ public class Contexto<T> {
 	 * @exception VariavelJaDeclaradaException
 	 *                se j� existir um mapeamento do identificador nesta tabela.
 	 */
-	public synchronized void map(Id idArg, T valorId) throws VariavelJaDeclaradaException {
+	public void map(Id idArg, T valorId) throws VariavelJaDeclaradaException {
 
 		try {
 			HashMap<Id, T> aux = pilha.peek();
@@ -59,26 +59,37 @@ public class Contexto<T> {
 	 *                se n�o existir nenhum valor mapeado ao id dado nesta
 	 *                tabela.
 	 */
-	public synchronized T get(Id idArg) throws VariavelNaoDeclaradaException {
+	public T get(Id idArg) throws VariavelNaoDeclaradaException {
 
-		try {
-			T result = null;
-			Stack<HashMap<Id, T>> auxStack = new Stack<HashMap<Id, T>>();
-			while (result == null && !pilha.empty()) {
-				HashMap<Id, T> aux = pilha.pop();
-				auxStack.push(aux);
-				result = aux.get(idArg);
-			}
-			while (!auxStack.empty()) {
-				pilha.push(auxStack.pop());
-			}
-			if (result == null)
-				throw new IdentificadorNaoDeclaradoException();
+		T result = null;
 
-			return result;
-		} catch (IdentificadorNaoDeclaradoException e) {
-			throw new VariavelNaoDeclaradaException(idArg);
+		for (int i = 0; i < pilha.size(); i++) {
+			HashMap<Id, T> map = pilha.get(i);
+			result = map.get(idArg);
+
+			if (result != null) {
+				break;
+			}
 		}
+
+		if (result == null)
+			throw new VariavelNaoDeclaradaException(idArg);
+
+		/* XXX: Code Smell!
+		
+		while (result == null && !pilha.empty()) {
+			HashMap<Id, T> aux = pilha.pop();
+			auxStack.push(aux);
+			result = aux.get(idArg);
+			System.out.println(pilha);
+		}
+		while (!auxStack.empty()) {
+			pilha.push(auxStack.pop());
+		} 
+		
+		*/
+
+		return result;
 	}
 
 	/**
@@ -86,8 +97,10 @@ public class Contexto<T> {
 	 * 
 	 * @return Stack
 	 */
-	protected synchronized Stack<HashMap<Id, T>> getPilha() {
+	protected Stack<HashMap<Id, T>> getPilha() {
 
+		System.out.println("GET PILHA");
+		System.out.println(pilha.toString());
 		return pilha;
 	}
 
@@ -97,7 +110,7 @@ public class Contexto<T> {
 	 * @param pilha
 	 *            The pilhaValor to set
 	 */
-	protected synchronized void setPilha(Stack<HashMap<Id, T>> pilha) {
+	protected void setPilha(Stack<HashMap<Id, T>> pilha) {
 
 		this.pilha = pilha;
 	}

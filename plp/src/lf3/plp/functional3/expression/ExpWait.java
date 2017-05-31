@@ -19,12 +19,12 @@ public class ExpWait extends ExpUnaria {
 
 	private List<Expressao> callbacks = new ArrayList<Expressao>();
 
-	public ExpWait(Expressao... exp) {
-		super(exp[0], "wait");
+	public ExpWait(Expressao exp, Expressao[] array) {
+		super(exp, "wait");
 
-		if (exp.length > 1) {
-			for (Expressao expressao : exp) {
-				callbacks.add(expressao);
+		if (array.length > 0) {
+			for (Expressao callback : array) {
+				callbacks.add(callback);
 			}
 		}
 	}
@@ -40,7 +40,8 @@ public class ExpWait extends ExpUnaria {
 			Thread.sleep(valor * 1000);
 
 			for (Expressao callback : callbacks) {
-				callback.avaliar(amb);
+				Valor retorno = callback.avaliar(amb);
+				System.out.println(retorno.toString());
 			}
 
 			return new ValorInteiro(valor);
@@ -69,6 +70,11 @@ public class ExpWait extends ExpUnaria {
 	@Override
 	public ExpUnaria clone() {
 
-		return new ExpWait(exp.clone());
+		List<Expressao> callbackClone = new ArrayList<>(callbacks.size());
+
+		for (Expressao callback : callbacks) {
+			callbackClone.add(callback.clone());
+		}
+		return new ExpWait(exp.clone(), callbacks.toArray(new Expressao[callbacks.size()]));
 	}
 }
