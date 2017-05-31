@@ -40,7 +40,8 @@ public class ExpWait extends ExpUnaria {
 			Thread.sleep(valor * 1000);
 
 			for (Expressao callback : callbacks) {
-				callback.avaliar(amb);
+				Valor resultado = callback.avaliar(amb);
+				System.out.println(resultado.toString());
 			}
 
 			return new ValorInteiro(valor);

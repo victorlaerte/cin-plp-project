@@ -8,6 +8,8 @@ public interface AmbienteExecucao extends Ambiente<Valor> {
 
 	public AmbienteExecucao getParent();
 
+	public String getThreadName();
+
 	public void putMessageInQueue(String processId, String message) throws InterruptedException;
 
 	public String takeMessageFromQueue(String processId, int timeoutInSeconds);

@@ -1,7 +1,10 @@
 package lf3.plp.functional3.expression;
 
+import static lf3.plp.functional3.util.AmbienteUtil.getMainThreadContext;
+
 import lf3.plp.expressions1.util.Tipo;
 import lf3.plp.expressions1.util.TipoPrimitivo;
+import lf3.plp.expressions2.expression.ExpUnaria;
 import lf3.plp.expressions2.expression.Expressao;
 import lf3.plp.expressions2.expression.Valor;
 import lf3.plp.expressions2.expression.ValorInteiro;
@@ -9,50 +12,37 @@ import lf3.plp.expressions2.expression.ValorString;
 import lf3.plp.expressions2.memory.AmbienteCompilacao;
 import lf3.plp.expressions2.memory.AmbienteExecucao;
 import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
-import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;;
 
-public class ExpReceive extends ExpPromise {
+public class ExpReceive extends ExpUnaria {
 
-	public ExpReceive(Expressao... exp) {
-		super("receive", exp);
+	public ExpReceive(Expressao exp) {
+		super(exp, "receive");
 	}
 
 	@Override
 	public boolean checaTipo(AmbienteCompilacao amb)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
-		Expressao[] expressions = getExp();
+		Expressao timeoutInSeconds = getExp();
 
-		try {
-			Expressao processId = expressions[0];
-			Expressao timeoutInSeconds = expressions[1];
-
-			return processId.getTipo(amb).eString() && timeoutInSeconds.getTipo(amb).eInteiro();
-		} catch (ArrayIndexOutOfBoundsException e) {
-			//TODO: decidir o comportamento
-		}
-		return false;
+		return timeoutInSeconds.getTipo(amb).eInteiro();
 	}
 
 	@Override
 	public Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 
-		Expressao[] expressions = getExp();
+		Expressao timeoutInSeconds = getExp();
 
-		try {
-			Expressao processId = expressions[0];
-			Expressao timeoutInSeconds = expressions[1];
+		Integer integerTimeoutInSeconds = ((ValorInteiro) timeoutInSeconds.avaliar(amb)).valor();
 
-			String stringProcessId = ((ValorString) processId.avaliar(amb)).valor();
-			Integer integerTimeoutInSeconds = ((ValorInteiro) timeoutInSeconds.avaliar(amb)).valor();
+		String processId = amb.getThreadName();
+		AmbienteExecucao mainThreadContext = getMainThreadContext(amb);
 
-			return new ValorString(amb.takeMessageFromQueue(stringProcessId, integerTimeoutInSeconds));
+		String messageReceived = mainThreadContext.takeMessageFromQueue(processId, integerTimeoutInSeconds);
+		System.out.println("Message received: " + messageReceived);
 
-		} catch (ArrayIndexOutOfBoundsException e) {
-			//TODO: decidir o comportamento
-		}
-
-		return null;
+		return new ValorString(messageReceived);
 	}
 
 	@Override
@@ -64,12 +54,21 @@ public class ExpReceive extends ExpPromise {
 	@Override
 	public Expressao reduzir(AmbienteExecucao ambiente) {
 
-		return null;
+		exp.reduzir(ambiente);
+		return this;
 	}
 
 	@Override
-	public Expressao clone() {
+	public ExpUnaria clone() {
+
 		return new ExpReceive(exp.clone());
+	}
+
+	@Override
+	protected boolean checaTipoElementoTerminal(AmbienteCompilacao amb)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
+
+		return exp.getTipo(amb).eString();
 	}
 
 }

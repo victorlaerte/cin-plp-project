@@ -5,26 +5,35 @@
    wait(10)
 }
 ```
+
 ```
 {
    let var x=10 in wait(x)
 }
 ```
-let fun sleep time = wait(time) in sleep(10)
 
 ```
 {
+   let fun sleep time = wait(time) in sleep(10)
+}
+```
+
+```
+{
+  {
    process p1 
        let fun sum x = x in sum(1)
    end
+  }
 }
+
 ```
 ```
 {
    {
-	process
-	  p1 let fun sleep time = wait(time) in sleep(10)
-	end
+	  process
+	     p1 let fun sleep time = wait(time) in sleep(10)
+	  end
    }
 }
 ```
@@ -65,6 +74,19 @@ let fun sleep time = wait(time) in sleep(10)
 {
    {
  	process p1
+		let fun enviarMensagem idProcesso mensagem = send(idProcesso, mensagem) in wait(10, enviarMensagem("p2", "Teste"))
+ 	end
+   }
+}
+```
+
+```
+{
+   {
+        process p2
+		let fun printRemoteMsg timeout = receive(timeout) in printRemoteMsg(120)
+ 	end
+   	process p1
 		let fun enviarMensagem idProcesso mensagem = send(idProcesso, mensagem) in wait(10, enviarMensagem("p2", "Teste"))
  	end
    }

@@ -15,19 +15,23 @@ import lf3.plp.functional1.memory.ContextoExecucaoFuncional;
 public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecucao {
 
 	public static final int DEFAULT_QUEUE_SIZE = 1000;
-	private Map<String, BlockingQueue<String>> map = new HashMap<>();
+	private Map<String, BlockingQueue<String>> messageMap = new HashMap<>();
 	private AmbienteExecucao parent;
+	private String threadName;
 
-	public ContextoExecucao() {}
+	public ContextoExecucao(String threadName) {
+		this.threadName = threadName;
+	}
 
-	public ContextoExecucao(AmbienteExecucao parent) {
+	public ContextoExecucao(String threadName, AmbienteExecucao parent) {
+		this.threadName = threadName;
 		this.parent = parent;
 	}
 
 	@Override
 	public ContextoExecucao clone() {
 
-		ContextoExecucaoFuncional retorno = new ContextoExecucaoFuncional();
+		ContextoExecucaoFuncional retorno = new ContextoExecucaoFuncional(threadName);
 
 		Stack<HashMap<Id, Valor>> novaPilha = new Stack<HashMap<Id, Valor>>();
 
@@ -48,21 +52,35 @@ public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecuca
 	@Override
 	public void putMessageInQueue(String processId, String message) throws InterruptedException {
 
-		if (map.containsKey(processId)) {
-			BlockingQueue<String> blockingQueue = map.get(processId);
+		if (messageMap.containsKey(processId)) {
+			BlockingQueue<String> blockingQueue = messageMap.get(processId);
 			blockingQueue.put(message);
 
 		} else {
 			BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(DEFAULT_QUEUE_SIZE);
 			blockingQueue.put(message);
-			map.put(processId, blockingQueue);
+			messageMap.put(processId, blockingQueue);
 		}
 	}
 
 	@Override
 	public String takeMessageFromQueue(String processId, int timeoutInSeconds) {
 
-		BlockingQueue<String> blockingQueue = map.get(processId);
+		BlockingQueue<String> blockingQueue = messageMap.get(processId);
+
+		long startTime = System.currentTimeMillis();
+		long waitTime = timeoutInSeconds * 1000;
+		long endTime = startTime + waitTime;
+
+		while (blockingQueue == null && System.currentTimeMillis() < endTime) {
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			blockingQueue = messageMap.get(processId);
+		}
 
 		String message = "";
 
@@ -83,5 +101,11 @@ public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecuca
 	public AmbienteExecucao getParent() {
 
 		return parent;
+	}
+
+	@Override
+	public String getThreadName() {
+
+		return threadName;
 	}
 }

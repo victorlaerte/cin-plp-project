@@ -9,8 +9,7 @@ import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import lf3.plp.functional1.util.DefFuncao;
 
-public class ContextoExecucaoFuncional extends ContextoExecucao
-		implements AmbienteExecucaoFuncional {
+public class ContextoExecucaoFuncional extends ContextoExecucao implements AmbienteExecucaoFuncional {
 
 	/**
 	 * A pilha de blocos de funcao deste contexto.
@@ -20,16 +19,21 @@ public class ContextoExecucaoFuncional extends ContextoExecucao
 	/**
 	 * Construtor da classe.
 	 */
-	public ContextoExecucaoFuncional() {
+	public ContextoExecucaoFuncional(String threadName) {
+		super(threadName);
 		pilhaFuncao = new Stack<HashMap<Id, DefFuncao>>();
 	}
 
+	@Override
 	public void incrementa() {
+
 		super.incrementa();
 		pilhaFuncao.push(new HashMap<Id, DefFuncao>());
 	}
 
+	@Override
 	public void restaura() {
+
 		super.restaura();
 		pilhaFuncao.pop();
 	}
@@ -45,8 +49,9 @@ public class ContextoExecucaoFuncional extends ContextoExecucao
 	 * @exception VariavelJaDeclaradaException
 	 *                se o id ja' estiver declarado.
 	 */
-	public void mapFuncao(Id idArg, DefFuncao funcao)
-			throws VariavelJaDeclaradaException {
+	@Override
+	public void mapFuncao(Id idArg, DefFuncao funcao) throws VariavelJaDeclaradaException {
+
 		HashMap<Id, DefFuncao> aux = pilhaFuncao.peek();
 		if (aux.put(idArg, funcao) != null) {
 			throw new VariavelJaDeclaradaException(idArg);
@@ -64,10 +69,11 @@ public class ContextoExecucaoFuncional extends ContextoExecucao
 	 * @exception VariavelNaoDeclaradaException
 	 *                se o id nao estiver declarado.
 	 */
+	@Override
 	public DefFuncao getFuncao(Id idArg) throws VariavelNaoDeclaradaException {
+
 		DefFuncao result = null;
-		Stack<HashMap<Id, DefFuncao>> auxStack =
-			new Stack<HashMap<Id, DefFuncao>>();
+		Stack<HashMap<Id, DefFuncao>> auxStack = new Stack<HashMap<Id, DefFuncao>>();
 		while (result == null && !pilhaFuncao.empty()) {
 			HashMap<Id, DefFuncao> aux = pilhaFuncao.pop();
 			auxStack.push(aux);
@@ -82,8 +88,10 @@ public class ContextoExecucaoFuncional extends ContextoExecucao
 
 		return result;
 	}
-	
+
+	@Override
 	public ContextoExecucaoFuncional clone() {
+
 		return this;
 	}
 }
