@@ -84,13 +84,11 @@ public class ContextoExecucao extends Contexto<Valor> implements AmbienteExecuca
 
 		String message = "";
 
-		if (blockingQueue == null) {
-			//TODO: Lançar Exception
-		} else {
+		if (blockingQueue != null) {
 			try {
 				message = blockingQueue.poll(timeoutInSeconds, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
-				//TODO: decidir o comportamento
+				throw new RuntimeException();
 			}
 		}
 

@@ -36,10 +36,11 @@ public class ExpMultiprocess implements Expressao {
 		int received = 0;
 		boolean errors = false;
 
+		Valor valor = null;
 		while (received < decProcessoArray.length && !errors) {
 			try {
 				Future<Valor> resultFuture = completionService.take();
-				resultFuture.get();
+				valor = resultFuture.get();
 				received++;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -47,7 +48,7 @@ public class ExpMultiprocess implements Expressao {
 			}
 		}
 
-		return null;
+		return valor;
 	}
 
 	@Override
