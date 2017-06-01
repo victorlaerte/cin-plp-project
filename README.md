@@ -18,6 +18,8 @@ The syntax of the functionality [can be found here](/SINTAX.md)
 
 The BNF model [can be found here](/BNF.md)
 
+Some usege examples [can be found here](/EXAMPLES.md)
+
 A sample code with concurrency and messaging that will guide real implementation [can be found here](https://github.com/victorlaerte/ichat-api)
 
 ## Justification

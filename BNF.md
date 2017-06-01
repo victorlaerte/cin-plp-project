@@ -1,7 +1,7 @@
 # BNF (Backus-Naur form)
 
 ```
-Programa ::= Expressao
+Programa ::= Expressao | ExpMultiprocess
 Expressao ::= Valor
 | ExpUnaria
 | ExpBinaria
@@ -9,7 +9,7 @@ Expressao ::= Valor
 | Id
 | Aplicacao
 | IfThenElse
-| ExpProcessoDeclaracao
+| ExpMultiprocess
 
 Valor ::= ValorConcreto | ValorAbstrato
 ValorAbstrato ::= ValorFuncao
@@ -18,15 +18,15 @@ ValorConcreto ::= ValorInteiro | ValorBooleano | ValorString | ValorLista
 
 ValorFuncao ::= "fn" Id Id "." Expressao
 
-ExpUnaria ::= "-" Expressao | "not" Expressao | "length" Expressao 
-                          | head(Expressao) | tail(Expressao) 
+ExpUnaria ::= "-" Expressao | "not" Expressao | "length" Expressao
+                          | head(Expressao) | tail(Expressao)
                           | ExpCompreensaoLista
+                          | wait(Expressao | ListExp)
+                          | receive(Expressao)
 
 ExpCompreensaoLista ::= Expressao Gerador | Expressao Gerador Filtro
 
-ExpExecutor ::= wait(Expressao) | send(ValorString "," ValorString)
-
-ExpPromise ::= receive(ValorString "," ValorInteiro)
+ExpExecutor ::= send(ValorString "," ValorString)
 
 ExpProcess ::= ExpExecutor | ExpPromise
 
@@ -35,7 +35,7 @@ Gerador ::= “for” Id “in” Expressao
 
 Filtro ::= “if” Expressao
 
-ExpBinaria ::=     Expressao "+" Expressao
+ExpBinaria ::= Expressao "+" Expressao
 | Expressao "-" Expressao
 | Expressao "*" Expressao
 | Expressao ">" Expressao
@@ -56,7 +56,10 @@ DeclaracaoFuncional ::= DecVariavel
 DecVariavel ::= "var" Id "=" Expressao
 DecFuncao ::= "fun" ListId "=" Expressao
 
-ExpProcessoDeclaracao ::= "let" DecProcess
+ExpMultiprocess ::= DecProcess  |  ListDecProcess
+
+ListDecProcess ::= DecProcess  |  ListDecProcess
+
 DecProcesso ::= "process" Id ExpDeclaracao "end"
 
 DecComposta ::= DeclaracaoFuncional "," DeclaracaoFuncional

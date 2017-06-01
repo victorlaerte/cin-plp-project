@@ -15,11 +15,11 @@ import lf3.plp.expressions2.memory.VariavelJaDeclaradaException;
 import lf3.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import lf3.plp.functional3.declaration.DecProcesso;
 
-public class ExpProcessoDeclaracao implements Expressao {
+public class ExpMultiprocess implements Expressao {
 
 	private DecProcesso[] decProcessoArray;
 
-	public ExpProcessoDeclaracao(DecProcesso... decProcesso) {
+	public ExpMultiprocess(DecProcesso... decProcesso) {
 		this.decProcessoArray = decProcesso;
 	}
 

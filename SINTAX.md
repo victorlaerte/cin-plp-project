@@ -1,19 +1,16 @@
 ```
-process main
-	let fun teste msg1 msg2 = msg1+msg2 in
-		receive(idProcess1, 60) // This will wait until process1 response or 60 seconds timeout
-		receive(idProcess2, 60) // This will wait until process2 response or 60 seconds timeout
-end
+{
+   {
+	process p2
+	// This will wait until some message is received or 120 seconds timeout
+	let fun printRemoteMsg timeout = receive(timeout) in printRemoteMsg(120) 
+	end
 
-process idProcess1
-	let fun ping = wait(3) // This will lock the processe by 3 seconds
-                   send("main", "ping") // This will send message 'ping' to the mainProcess
-        in ping()
-end
-
-process idProcess2
-	let fun pong = wait(5) // This will lock the processe by 5 seconds 
-                   send("main", " pong") // This will send message 'pong' to the mainProcess
-    	in pong() 
-end
+	process p1
+	/ This will send message 'Teste' to the processe p2
+	let fun enviarMensagem idProcesso mensagem = send(idProcesso, mensagem)
+		in wait(10, enviarMensagem("p2", "Teste"))
+	end
+   }
+}
 ```
