@@ -10,6 +10,7 @@ Expressao ::= Valor
 | Aplicacao
 | IfThenElse
 | ExpMultiprocess
+| ExpExecutor
 
 Valor ::= ValorConcreto | ValorAbstrato
 ValorAbstrato ::= ValorFuncao
@@ -27,8 +28,6 @@ ExpUnaria ::= "-" Expressao | "not" Expressao | "length" Expressao
 ExpCompreensaoLista ::= Expressao Gerador | Expressao Gerador Filtro
 
 ExpExecutor ::= send(ValorString "," ValorString)
-
-ExpProcess ::= ExpExecutor | ExpPromise
 
 Gerador ::= “for” Id “in” Expressao
                 | “for” Id “in” Expressao [“,”] Gerador
